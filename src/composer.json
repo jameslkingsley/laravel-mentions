@@ -1,0 +1,27 @@
+{
+    "name": "jameslkingsley/laravel-mentions",
+    "description": "End-to-end mentions in Laravel 5.",
+    "keywords": [
+        "laravel",
+        "mentions"
+    ],
+    "homepage": "https://github.com/jameslkingsley/laravel-mentions",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "James Kingsley",
+            "email": "jameslkingsley@outlook.com",
+            "homepage": "https://github.com/jameslkingsley",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "illuminate/support": "~5.3.28|~5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kingsley\\Mentions\\": "src"
+        }
+    }
+}
