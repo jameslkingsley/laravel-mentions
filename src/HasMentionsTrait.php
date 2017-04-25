@@ -16,18 +16,20 @@ trait HasMentionsTrait
      */
     public function mention($model)
     {
+        if (is_string($model) && strlen($model) != 0) {
+            $model = $this->parseMentions($model);
+        }
+
         if ($model instanceof Model) {
             return $this->createMention($model);
         }
 
         if ($model instanceof Collection) {
-            $added = [];
+            $caller = $this;
 
-            foreach ($model as $m) {
-                $added[] = $this->createMention($m);
-            }
-
-            return collect($added);
+            return $model->map(function($m) use(&$caller) {
+                $caller->createMention($m);
+            });
         }
 
         throw InvalidModelType::create();
@@ -111,5 +113,19 @@ trait HasMentionsTrait
             ->where('recipient_type', get_class($model))
             ->where('recipient_id', $model->getKey())
             ->delete();
+    }
+
+    /**
+     * Parses the mentions JSON passed in via form.
+     *
+     * @return Collection Model
+     */
+    public function parseMentions($json)
+    {
+        $list = json_decode($json);
+
+        return collect($list)->map(function($item) {
+            return $item->model::findOrFail($item->id);
+        });
     }
 }
