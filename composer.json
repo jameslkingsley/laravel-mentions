@@ -17,11 +17,12 @@
     ],
     "require": {
         "php": "^7.0",
-        "illuminate/support": "~5.3.28|~5.4.0"
+        "illuminate/support": "~5.4.0",
+        "illuminate/database": "~5.4.0"
     },
     "autoload": {
         "psr-4": {
-            "Kingsley\\Mentions\\": "src"
+            "Kingsley\\Mentions\\": "src/"
         }
     }
 }
