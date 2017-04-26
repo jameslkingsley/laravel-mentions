@@ -4,7 +4,6 @@ namespace Kingsley\Mentions;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Kingsley\Mentions\Exceptions\InvalidModelType;
 use Kingsley\Mentions\Mention;
 
 trait HasMentionsTrait
@@ -34,7 +33,7 @@ trait HasMentionsTrait
             });
         }
 
-        throw InvalidModelType::create();
+        return;
     }
 
     /**
