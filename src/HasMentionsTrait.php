@@ -13,7 +13,7 @@ trait HasMentionsTrait
      *
      * @return [Collection] Kingsley\Mentions\Mention
      */
-    public function mention($model)
+    public function mention($model, $notify = true)
     {
         if (is_null($model)) return;
 
@@ -22,14 +22,14 @@ trait HasMentionsTrait
         }
 
         if ($model instanceof Model) {
-            return $this->createMention($model);
+            return $this->createMention($model, $notify);
         }
 
         if ($model instanceof Collection) {
             $caller = $this;
 
-            return $model->map(function($m) use(&$caller) {
-                $caller->createMention($m);
+            return $model->map(function($m) use(&$caller, $notify) {
+                $caller->createMention($m, $notify);
             });
         }
 
@@ -102,7 +102,7 @@ trait HasMentionsTrait
      *
      * @return Kingsley\Mentions\Mention
      */
-    private function createMention(Model $model)
+    private function createMention(Model $model, $notify = true)
     {
         $mention = Mention::create([
             'model_type' => get_class($this),
@@ -113,7 +113,7 @@ trait HasMentionsTrait
 
         $mention->setReference($this);
 
-        if ($mention->pool($model)->auto_notify) {
+        if ($mention->pool($model)->auto_notify && $notify) {
             $mention->notify();
         }
 
