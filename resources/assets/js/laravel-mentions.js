@@ -7,11 +7,13 @@
             var pool = pools[i];
 
             collections.push($.extend(true, {
+                trigger: '@',
                 lookup: pool.display,
                 allowSpaces: true,
                 selectTemplate: function(item) {
                     return '<span class="mention-node" data-object="'
-                        + pool.pool + ':' + item.original[pool.reference] + '">@'
+                        + pool.pool + ':' + item.original[pool.reference] + '">'
+                        + (pool.trigger || '@')
                         + item.original[pool.display] + '</span>';
                 },
                 values: function(text, callback) {
