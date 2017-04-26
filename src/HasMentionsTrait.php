@@ -16,7 +16,9 @@ trait HasMentionsTrait
      */
     public function mention($model)
     {
-        if (is_string($model) && strlen($model) != 0) {
+        if (is_null($model)) return;
+
+        if (is_string($model) && strlen(trim($model)) != 0) {
             $model = $this->parseMentions($model);
         }
 
@@ -116,16 +118,18 @@ trait HasMentionsTrait
     }
 
     /**
-     * Parses the mentions JSON passed in via form.
+     * Parses the mentions list passed in via form.
      *
      * @return Collection Model
      */
-    public function parseMentions($json)
+    public function parseMentions($list)
     {
-        $list = json_decode($json);
+        $list = collect(explode(',', $list));
 
-        return collect($list)->map(function($item) {
-            return $item->model::findOrFail($item->id);
+        return $list->map(function($item) {
+            $parts = explode(':', $item);
+            $model = app()->make(config('mentions.pools.'.$parts[0].'.model'));
+            return $model::findOrFail($parts[1]);
         });
     }
 }

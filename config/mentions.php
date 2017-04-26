@@ -4,7 +4,7 @@ return [
     'pools' => [
         'users' => [
             'model' => 'App\User',
-            'columns' => ['name', 'email'],
+            'column' => 'name',
             'notification' => 'App\Notifications\UserMentioned',
             'auto_notify' => true
         ]
