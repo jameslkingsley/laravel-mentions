@@ -80,6 +80,24 @@ trait HasMentionsTrait
     }
 
     /**
+     * Gets the mentions as an encoded string for use in form fields.
+     *
+     * @return string
+     */
+    public function mentionsEncoded()
+    {
+        $mentions = $this->mentions();
+        $encoded = collect();
+
+        foreach ($mentions as $mention) {
+            $pool = Mention::pool($mention);
+            $encoded->push("{$pool->key}:{$mention->getKey()}");
+        }
+
+        return $encoded->implode(',');
+    }
+
+    /**
      * Creates a new mention for the given model.
      *
      * @return Kingsley\Mentions\Mention

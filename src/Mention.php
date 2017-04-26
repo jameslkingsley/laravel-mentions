@@ -49,13 +49,15 @@ class Mention extends Model
      *
      * @return void
      */
-    public function pool(Model $model)
+    public static function pool(Model $model)
     {
         $name = get_class($model);
 
         foreach (config('mentions.pools') as $key => $pool) {
             if ($pool['model'] == $name) {
-                return (object)$pool;
+                $result = (object)$pool;
+                $result->key = $key;
+                return $result;
             }
         }
 
