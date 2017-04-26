@@ -29,7 +29,7 @@ trait HasMentionsTrait
             $caller = $this;
 
             return $model->map(function($m) use(&$caller, $notify) {
-                $caller->createMention($m, $notify);
+                return $caller->createMention($m, $notify);
             });
         }
 
