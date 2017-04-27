@@ -3,30 +3,39 @@
         var node = $(this);
         var collections = [];
 
+        var selectTemplate = function(pool) {
+            return function(item) {
+                return '<span class="mention-node" data-object="'
+                    + pool.pool + ':' + item.original[pool.reference] + '">'
+                    + (pool.trigger || '@')
+                    + item.original[pool.display] + '</span>';
+            }
+        }
+
+        var values = function(pool) {
+            return function(text, callback) {
+                if (text.length <= 1) return;
+
+                $.post('/api/mentions', {
+                    p: [pool.pool],
+                    q: text
+                }, function(data) {
+                    callback(data);
+                }, 'json');
+            }
+        }
+
         for (var i = 0; i < pools.length; i++) {
             var pool = pools[i];
-
-            collections.push($.extend(true, {
+            var options = $.extend({
                 trigger: '@',
                 lookup: pool.display,
                 allowSpaces: true,
-                selectTemplate: function(item) {
-                    return '<span class="mention-node" data-object="'
-                        + pool.pool + ':' + item.original[pool.reference] + '">'
-                        + (pool.trigger || '@')
-                        + item.original[pool.display] + '</span>';
-                },
-                values: function(text, callback) {
-                    if (text.length <= 1) return;
+                selectTemplate: selectTemplate(pool),
+                values: values(pool)
+            }, pool);
 
-                    $.post('/api/mentions', {
-                        p: [pool.pool],
-                        q: text
-                    }, function(data) {
-                        callback(data);
-                    }, 'json');
-                }
-            }, pool));
+            collections.push(options);
         }
 
         var tribute = new Tribute({
