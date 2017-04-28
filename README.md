@@ -122,9 +122,6 @@ Next add the script to initialize the mentions:
 
 ```js
 new Mentions({
-    // Trigger the popup on the @ symbol
-    trigger: '@',
-
     // Input element selector
     input: '.has-mentions',
 
@@ -133,6 +130,9 @@ new Mentions({
 
     // Pools
     pools: [{
+        // Trigger the popup on the @ symbol
+        trigger: '@',
+
         // Pool name from the mentions config
         pool: 'users',
 
