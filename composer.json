@@ -22,9 +22,22 @@
         "illuminate/http": "~5.4.0",
         "illuminate/routing": "~5.4.0"
     },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~5.7"
+    },
     "autoload": {
         "psr-4": {
             "Kingsley\\Mentions\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor\\bin\\phpunit"
     }
 }

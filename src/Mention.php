@@ -3,7 +3,8 @@
 namespace Kingsley\Mentions;
 
 use Illuminate\Database\Eloquent\Model;
-use Kingsley\Mentions\Exceptions\CannotFindPool;
+use Kingsley\Mentions\MentionCollection;
+use Kingsley\Exceptions\CannotFindPool;
 
 class Mention extends Model
 {
@@ -22,6 +23,17 @@ class Mention extends Model
     protected $reference;
 
     /**
+     * Create a new Eloquent Collection instance.
+     *
+     * @param array $models
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function newCollection(array $models = [])
+    {
+        return new MentionCollection($models);
+    }
+
+    /**
      * Gets the recipient model.
      *
      * @return Model
@@ -36,12 +48,18 @@ class Mention extends Model
      *
      * @return any
      */
-    public function notify()
+    public function notify($notify_class = '')
     {
         $model = $this->recipient();
         $pool = $this->pool($model);
 
-        $model->notify(new $pool->notification($this->reference));
+        $notify_class = is_string($notify_class) ? $notify_class : $pool->notification;
+
+        if (method_exists($this->reference, 'getMentionNotification')) {
+            $notify_class = $this->reference->getMentionNotification($model);
+        }
+
+        $model->notify(new $notify_class($this->reference));
     }
 
     /**
@@ -49,8 +67,9 @@ class Mention extends Model
      *
      * @return void
      */
-    public static function pool(Model $model)
+    public static function pool(Model $model = null)
     {
+        $model = is_null($model) ? $this : $model;
         $name = get_class($model);
 
         foreach (config('mentions.pools') as $key => $pool) {
