@@ -1,6 +1,9 @@
 <?php
 
+namespace Kingsley\Mentions;
+
 use Illuminate\Database\Eloquent\Collection;
+use Kingsley\Mentions\Mention;
 
 class MentionCollection extends Collection
 {
@@ -14,8 +17,9 @@ class MentionCollection extends Collection
     {
         $encoded = collect();
 
-        $this->each(function($mention) use(&$encoded) {
-            $encoded->push("{$mention->pool()->key}:{$mention->getKey()}");
+        $this->each(function($model) use(&$encoded) {
+            $pool = Mention::pool($model);
+            $encoded->push("{$pool->key}:{$model->getKey()}");
         });
 
         return $encoded->implode(',');

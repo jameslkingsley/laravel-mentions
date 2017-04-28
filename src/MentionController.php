@@ -16,21 +16,16 @@ class MentionController extends Controller
     {
         $result_set = collect();
 
-        $pools = $request->p;
-        $query = $request->q;
+        $pool = (object)config('mentions.pools.'.$request->p);
+        $model = app()->make($pool->model);
 
-        foreach ($pools as $p) {
-            $pool = (object)config('mentions.pools.'.$p);
-            $model = app()->make($pool->model);
-
-            $records = $model
-                ->where($pool->column, 'LIKE', "%$query%")
-                ->get([$model->getKeyName(), $pool->column])
-                ->each(function($record) use($p, &$result_set) {
-                    $record->pool = $p;
-                    $result_set->push($record);
-                });
-        }
+        $records = $model
+            ->where($pool->column, 'LIKE', "%$request->q%")
+            ->get([$model->getKeyName(), $pool->column])
+            ->each(function($record) use($request, &$result_set) {
+                $record->pool = $request->p;
+                $result_set->push($record);
+            });
 
         return response()->json($result_set);
     }
