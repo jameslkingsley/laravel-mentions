@@ -33,7 +33,6 @@ $mention->notify();
 
 ## Requirements
 
-- [jQuery](https://jquery.com/)
 - [Tribute](https://github.com/zurb/tribute)
 
 ## Installation
@@ -91,7 +90,7 @@ return [
 
 ## Usage
 
-Start off by including the front-end assets; **don't forget to include Tribute and jQuery!**
+Start off by including the front-end assets; **don't forget to include Tribute!**
 
 ```html
 <script type="text/javascript" src="/js/laravel-mentions.js"></script>
@@ -103,12 +102,12 @@ Now let's setup the form where we'll write a comment that has mentions:
 ```html
 <form method="post" action="{{ route('comments.store') }}">
     <!-- This field is required, it stores the mention data -->
-    <input type="hidden" name="mentions" value="">
+    <input type="hidden" name="mentions" id="mentions">
 
     <!-- We write the comment in the div -->
-    <!-- The for attribute is used by laravel-mentions to auto-populate the textarea -->
-    <textarea class="hide" name="text"></textarea>
-    <div class="has-mentions" contenteditable="true" for="text"></div>
+    <!-- The for attribute is a helper to auto-populate the textarea -->
+    <textarea class="hide" name="text" id="text"></textarea>
+    <div class="has-mentions" contenteditable="true" for="#text"></div>
 
     <button type="submit">
         Post Comment
@@ -121,24 +120,29 @@ Now let's setup the form where we'll write a comment that has mentions:
 
 Next add the script to initialize the mentions:
 
-```html
-<script>
-    $(document).ready(function(e) {
-        $('.has-mentions').mentions([{
-            // Trigger the popup on the @ symbol
-            trigger: '@',
+```js
+new Mentions({
+    // Trigger the popup on the @ symbol
+    trigger: '@',
 
-            // Pool name from the mentions config
-            pool: 'users',
+    // Input element selector
+    input: '.has-mentions',
 
-            // Same value as the pool's 'column' value
-            display: 'name',
+    // Mentions form field selector
+    mentions: '#mentions',
 
-            // The model's primary key field name
-            reference: 'id'
-        }]);
-    });
-</script>
+    // Pools
+    pools: [{
+        // Pool name from the mentions config
+        pool: 'users',
+
+        // Same value as the pool's 'column' value
+        display: 'name',
+
+        // The model's primary key field name
+        reference: 'id'
+    }]
+});
 ```
 
 Now onto the back-end. Choose the model that you want to assign mentions to. In this example I'll choose `Comments`. We'll import the trait and use it in the class.
