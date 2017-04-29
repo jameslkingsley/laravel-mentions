@@ -5,13 +5,15 @@
 }
 
 .tribute-container ul {
-    padding: 0;
+    padding: .5rem 0;
     margin: 0;
 }
 
 .tribute-container ul li {
     padding: 1rem 2rem;
+    margin: 0;
     color: black;
+    list-style-type: none;
 }
 
 .tribute-container ul li.highlight, .tribute-container ul li:hover {
