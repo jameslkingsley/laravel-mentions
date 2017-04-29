@@ -82,4 +82,42 @@ class MentionsTest extends TestCase
 
         $this->assertInstanceOf(MentionCollection::class, $mentions);
     }
+
+    /** @test */
+    public function can_notify_new_mention()
+    {
+        $mention = $this->testCommentModel->mention($this->testUserModel->first());
+
+        $mention->notify();
+
+        $this->assertInstanceOf(Mention::class, $mention);
+    }
+
+    /** @test */
+    public function can_notify_new_mentions()
+    {
+        $mentions = $this->testCommentModel->mention($this->testUserModel->all());
+
+        $mentions->notify();
+
+        $this->assertInstanceOf(MentionCollection::class, $mentions);
+    }
+
+    /** @test */
+    public function can_get_recipient()
+    {
+        $mention = $this->testCommentModel->mention($this->testUserModel->first());
+        $recipient = $mention->recipient();
+
+        $this->assertInstanceOf(get_class($this->testUserModel), $recipient);
+    }
+
+    /** @test */
+    public function can_get_collection_encoded()
+    {
+        $mentions = $this->testCommentModel->mention($this->testUserModel->all());
+        $encoded = $mentions->encoded();
+
+        $this->assertInstanceOf(string, $encoded);
+    }
 }

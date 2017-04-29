@@ -43,7 +43,7 @@ abstract class TestCase extends Orchestra
                     'model' => 'Kingsley\Mentions\Test\TestUserModel',
                     'column' => 'name',
                     'notification' => 'Kingsley\Mentions\Test\TestNotifiedModel',
-                    'auto_notify' => true
+                    'auto_notify' => false
                 ]
             ]
         ]);

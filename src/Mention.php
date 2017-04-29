@@ -53,13 +53,15 @@ class Mention extends Model
         $model = $this->recipient();
         $pool = $this->pool($model);
 
-        $notify_class = is_string($notify_class) ? $notify_class : $pool->notification;
+        $notify_class = (is_string($notify_class) && $notify_class) ? $notify_class : $pool->notification;
 
         if (method_exists($this->reference, 'getMentionNotification')) {
             $notify_class = $this->reference->getMentionNotification($model);
         }
 
         $model->notify(new $notify_class($this->reference));
+
+        return $this;
     }
 
     /**
