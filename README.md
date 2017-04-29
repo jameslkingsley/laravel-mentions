@@ -176,6 +176,14 @@ public function store(Request $request)
 
 That's it! Now when displaying your comments you can style the `.mention-node` class that is inserted via Tribute. That same node also has a `data-object` attribute that contains the pool name and reference value, eg: `users:1`.
 
+### Editing Content With Mentions
+You'll most likely need to edit the text content, so it's necessary to restore the mentions list in the form.
+It's as simple as this:
+
+```html
+<input type="hidden" name="mentions" id="mentions" value="{{ $comment->mentions()->encoded() }}">
+```
+
 ### Notifications
 
 If you want to use notifications, here's some stuff you may need to know.
