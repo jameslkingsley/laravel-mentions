@@ -37,12 +37,15 @@ trait HasMentionsTrait
             return $this->mentionRepository->create($model, $notify);
         }
 
-        if ($model instanceof Collection) {
+        if ($model instanceof Collection || $model instanceof MentionCollection) {
             $caller = $this;
+            $mentionCollection = new MentionCollection;
 
-            return $model->map(function($m) use(&$caller, $notify) {
-                return $caller->mentionRepository->create($m, $notify);
+            $model->each(function($m) use(&$mentionCollection, $caller, $notify) {
+                $mentionCollection->push($caller->mentionRepository->create($m, $notify));
             });
+
+            return $mentionCollection;
         }
 
         return;
@@ -66,7 +69,7 @@ trait HasMentionsTrait
             return $this;
         }
 
-        if ($model instanceof Collection) {
+        if ($model instanceof Collection || $model instanceof MentionCollection) {
             foreach ($model as $m) {
                 $this->mentionRepository->destroy($m);
             }
