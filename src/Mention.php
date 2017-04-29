@@ -4,7 +4,7 @@ namespace Kingsley\Mentions;
 
 use Illuminate\Database\Eloquent\Model;
 use Kingsley\Mentions\MentionCollection;
-use Kingsley\Exceptions\CannotFindPool;
+use Kingsley\Mentions\Exceptions\CannotFindPool;
 
 class Mention extends Model
 {

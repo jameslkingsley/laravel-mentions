@@ -115,9 +115,9 @@ class MentionsTest extends TestCase
     /** @test */
     public function can_get_collection_encoded()
     {
-        $mentions = $this->testCommentModel->mention($this->testUserModel->all());
-        $encoded = $mentions->encoded();
+        $this->testCommentModel->mention($this->testUserModel->all());
+        $encoded = $this->testCommentModel->mentions()->encoded();
 
-        $this->assertInstanceOf(string, $encoded);
+        $this->assertInternalType('string', $encoded);
     }
 }
