@@ -59,7 +59,9 @@ class Mention extends Model
             $notify_class = $this->reference->getMentionNotification($model);
         }
 
-        $model->notify(new $notify_class($this->reference));
+        if (class_exists($notify_class)) {
+            $model->notify(new $notify_class($this->reference));
+        }
 
         return $this;
     }
