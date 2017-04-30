@@ -27,7 +27,7 @@ trait HasMentionsTrait
      */
     public function mention($model, $notify = true)
     {
-        if (is_null($model)) return;
+        if (is_null($model)) return null;
 
         if (is_string($model)) {
             $model = $this->mentionRepository->parse($model);
@@ -48,7 +48,7 @@ trait HasMentionsTrait
             return $mentionCollection;
         }
 
-        return;
+        return null;
     }
 
     /**
