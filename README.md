@@ -153,11 +153,11 @@ Now onto the back-end. Choose the model that you want to assign mentions to. In 
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Kingsley\Mentions\HasMentionsTrait;
+use Kingsley\Mentions\Traits\HasMentions;
 
 class Comment extends Model
 {
-    use HasMentionsTrait;
+    use HasMentions;
 }
 ```
 
