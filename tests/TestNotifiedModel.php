@@ -3,10 +3,10 @@
 namespace Kingsley\Mentions\Test;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Database\Eloquent\Model;
 
 class TestNotifiedModel extends Notification
 {

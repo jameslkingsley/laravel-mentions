@@ -1,12 +1,13 @@
 <?php
 
-namespace Kingsley\Mentions;
+namespace Kingsley\Mentions\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Kingsley\Mentions\MentionRepository;
+use Kingsley\Mentions\Collections\MentionCollection;
+use Kingsley\Mentions\Repositories\MentionRepository;
 
-trait HasMentionsTrait
+trait HasMentions
 {
     protected $mentionRepository;
 
@@ -23,7 +24,7 @@ trait HasMentionsTrait
     /**
      * Create a new mention for the given model(s).
      *
-     * @return [Collection] Kingsley\Mentions\Mention
+     * @return [Collection] Kingsley\Mentions\Models\Mention
      */
     public function mention($model, $notify = true)
     {
@@ -37,13 +38,12 @@ trait HasMentionsTrait
             return $this->mentionRepository->create($model, $notify);
         }
 
-        if ($model instanceof Collection || $model instanceof MentionCollection) {
-            $caller = $this;
+        if ($model instanceof Collection) {
             $mentionCollection = new MentionCollection;
 
-            $model->each(function($m) use(&$mentionCollection, $caller, $notify) {
-                $mentionCollection->push($caller->mentionRepository->create($m, $notify));
-            });
+            foreach ($model as $item) {
+                $mentionCollection->push($this->mentionRepository->create($item, $notify));
+            }
 
             return $mentionCollection;
         }
@@ -69,9 +69,9 @@ trait HasMentionsTrait
             return $this;
         }
 
-        if ($model instanceof Collection || $model instanceof MentionCollection) {
-            foreach ($model as $m) {
-                $this->mentionRepository->destroy($m);
+        if ($model instanceof Collection) {
+            foreach ($model as $item) {
+                $this->mentionRepository->destroy($item);
             }
 
             return $this;
@@ -90,7 +90,7 @@ trait HasMentionsTrait
         $mentions = $this->mentionRepository->get();
 
         if ($resolve) {
-            $mentions = $mentions->map(function($mention) {
+            $mentions->transform(function($mention) {
                 return $mention->recipient();
             });
         }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Kingsley\Mentions;
+namespace Kingsley\Mentions\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Kingsley\Mentions\MentionCollection;
 use Kingsley\Mentions\Exceptions\CannotFindPool;
+use Kingsley\Mentions\Collections\MentionCollection;
 
 class Mention extends Model
 {

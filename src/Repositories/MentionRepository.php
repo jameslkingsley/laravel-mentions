@@ -1,10 +1,10 @@
 <?php
 
-namespace Kingsley\Mentions;
+namespace Kingsley\Mentions\Repositories;
 
 use Illuminate\Support\Collection;
+use Kingsley\Mentions\Models\Mention;
 use Illuminate\Database\Eloquent\Model;
-use Kingsley\Mentions\Mention;
 
 class MentionRepository
 {

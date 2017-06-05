@@ -1,9 +1,9 @@
 <?php
 
-namespace Kingsley\Mentions;
+namespace Kingsley\Mentions\Collections;
 
+use Kingsley\Mentions\Models\Mention;
 use Illuminate\Database\Eloquent\Collection;
-use Kingsley\Mentions\Mention;
 
 class MentionCollection extends Collection
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kingsley\Mentions;
+namespace Kingsley\Mentions\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;

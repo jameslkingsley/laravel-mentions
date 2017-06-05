@@ -2,8 +2,8 @@
 
 namespace Kingsley\Mentions\Test;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class TestUserModel extends Model
 {

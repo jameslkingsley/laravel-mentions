@@ -2,12 +2,12 @@
 
 namespace Kingsley\Mentions\Test;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use DB;
+use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orchestra\Testbench\Traits as OrchestraTrait;
-use Illuminate\Database\Schema\Blueprint;
-use DB;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class TestCase extends Orchestra
 {

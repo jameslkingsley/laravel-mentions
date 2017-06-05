@@ -2,12 +2,12 @@
 
 namespace Kingsley\Mentions\Test\Unit;
 
+use Kingsley\Mentions\Test\TestCase;
+use Kingsley\Mentions\Models\Mention;
+use Kingsley\Mentions\Test\TestCommentModel;
+use Kingsley\Mentions\Collections\MentionCollection;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Kingsley\Mentions\Test\TestCase;
-use Kingsley\Mentions\Test\TestCommentModel;
-use Kingsley\Mentions\Mention;
-use Kingsley\Mentions\MentionCollection;
 
 class MentionsTest extends TestCase
 {
