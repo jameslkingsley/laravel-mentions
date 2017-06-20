@@ -94,11 +94,30 @@ return [
 
 ## Usage
 
-Start off by including the front-end assets; **don't forget to include Tribute!**
+First you will need to import [Tribute](https://github.com/zurb/tribute).
 
-```html
-<script type="text/javascript" src="/js/laravel-mentions.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/laravel-mentions.css">
+```
+npm install tributejs --save-dev
+```
+
+Then include Tribute in your `bootstrap.js` file and assign it globally.
+
+```js
+import Tribute from "tributejs";
+window.Tribute = Tribute;
+```
+
+Now in your `bootstrap.js` file you can import the `Mentions` class and also assign it globally.
+
+```js
+import Mentions from './laravel-mentions';
+window.Mentions = Mentions;
+```
+
+Now to include the styling just import it into your SCSS file.
+
+```css
+@import "laravel-mentions";
 ```
 
 Now let's setup the form where we'll write a comment that has mentions:
@@ -127,14 +146,17 @@ Next add the script to initialize the mentions:
 ```js
 new Mentions({
     // Input element selector
+    // Defaults to .has-mentions
     input: '.has-mentions',
 
-    // Mentions form field selector
-    mentions: '#mentions',
+    // Output form field selector
+    // Defaults to #mentions
+    output: '#mentions',
 
     // Pools
     pools: [{
         // Trigger the popup on the @ symbol
+        // Defaults to @
         trigger: '@',
 
         // Pool name from the mentions config
