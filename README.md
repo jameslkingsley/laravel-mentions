@@ -59,7 +59,7 @@ Next, you must install the service provider in `config/app.php`:
 Now publish the migration, front-end assets and config:
 
 ```bash
-php artisan vendor:publish
+php artisan vendor:publish --provider="Kingsley\Mentions\MentionServiceProvider"
 ```
 
 After the migration has been published you can create the mentions table by running the migrations:
