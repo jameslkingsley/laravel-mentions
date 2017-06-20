@@ -1,9 +1,24 @@
-function Mentions(options) {
-    var node = document.querySelector(options.input);
-    var collections = [];
+class Mentions {
+    constructor(options) {
+        this.options = options;
+        this.collections = [];
 
-    var selectTemplate = function(pool) {
-        return function(item) {
+        this.input = this.findNode(this.options.input, '.has-mentions');
+        this.output = this.findNode(this.options.output, '#mentions');
+
+        this.collect()
+            .attach()
+            .listen();
+    }
+
+    findNode(selector, defaultSelector) {
+        return document.querySelector(
+            selector || defaultSelector
+        );
+    }
+
+    template(pool) {
+        return item => {
             return '<span class="mention-node" data-object="'
                 + pool.pool + ':' + item.original[pool.reference] + '">'
                 + (pool.trigger || '@')
@@ -11,11 +26,11 @@ function Mentions(options) {
         }
     }
 
-    var values = function(pool) {
-        return function(text, callback) {
+    values(pool) {
+        return (text, callback) => {
             if (text.length <= 1) return;
 
-            var xhttp = new XMLHttpRequest();
+            let xhttp = new XMLHttpRequest();
 
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
@@ -28,38 +43,51 @@ function Mentions(options) {
         }
     }
 
-    for (var i = 0; i < options.pools.length; i++) {
-        var pool = options.pools[i];
+    collect() {
+        for (let pool of this.options.pools) {
+            this.collections.push({
+                trigger: pool.trigger || '@',
+                lookup: pool.display,
+                allowSpaces: pool.allowSpaces || true,
+                selectTemplate: this.template(pool),
+                values: this.values(pool)
+            });
+        }
 
-        collections.push({
-            trigger: pool.trigger || '@',
-            lookup: pool.display,
-            allowSpaces: true,
-            selectTemplate: selectTemplate(pool),
-            values: values(pool)
-        });
+        return this;
     }
 
-    var tribute = new Tribute({
-        collection: collections
-    });
+    attach() {
+        this.tribute = new Tribute({
+            collection: this.collections
+        });
 
-    tribute.attach(node);
+        this.tribute.attach(this.input);
 
-    node.addEventListener('keyup', function(event) {
-        var input = event.target;
-        var mentions = document.querySelector(options.mentions);
-        var objects = [];
+        return this;
+    }
 
-        var nodes = input.getElementsByClassName('mention-node');
-        for (var i = 0; i < nodes.length; i++) {
-            objects.push(nodes[i].getAttribute('data-object'));
-        }
+    listen() {
+        var instance = this;
 
-        mentions.value = objects.join();
+        this.input.addEventListener('keyup', event => {
+            let input = event.target;
+            let mentions = instance.output;
+            let objects = [];
 
-        if (input.hasAttribute('for')) {
-            document.querySelector(input.getAttribute('for')).value = input.innerHTML;
-        }
-    });
+            let nodes = input.getElementsByClassName('mention-node');
+
+            for (let node of nodes) {
+                objects.push(node.getAttribute('data-object'));
+            }
+
+            mentions.value = objects.join();
+
+            if (input.hasAttribute('for') && ! (instance.options.ignoreFor || false)) {
+                document.querySelector(input.getAttribute('for')).value = input.innerHTML;
+            }
+        });
+    }
 }
+
+module.exports = Mentions

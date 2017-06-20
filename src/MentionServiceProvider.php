@@ -25,8 +25,8 @@ class MentionServiceProvider extends ServiceProvider
 
         // Assets
         $this->publishes([
-            __DIR__.'/../resources/assets/js' => public_path('js'),
-            __DIR__.'/../resources/assets/css' => public_path('css')
+            __DIR__.'/../resources/assets/js' => resource_path('assets/js'),
+            __DIR__.'/../resources/assets/sass' => resource_path('assets/sass')
         ], 'assets');
 
         // Routes

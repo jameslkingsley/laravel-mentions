@@ -9,12 +9,17 @@ use Kingsley\Mentions\Repositories\MentionRepository;
 
 trait HasMentions
 {
+    /**
+     * Mention repository.
+     *
+     * @return Kingsley\Mentions\Repositories\MentionRepository
+     */
     protected $mentionRepository;
 
     /**
      * Constructor method.
      *
-     * @return any
+     * @return void
      */
     public function __construct()
     {
@@ -24,7 +29,7 @@ trait HasMentions
     /**
      * Create a new mention for the given model(s).
      *
-     * @return [Collection] Kingsley\Mentions\Models\Mention
+     * @return Collection Kingsley\Mentions\Models\Mention
      */
     public function mention($model, $notify = true)
     {

@@ -15,10 +15,8 @@ class CreateMentionsTable extends Migration
     {
         Schema::create('mentions', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('model_type');
-            $table->integer('model_id')->unsigned();
-            $table->string('recipient_type');
-            $table->integer('recipient_id')->unsigned();
+            $table->morphs('model');
+            $table->morphs('recipient');
             $table->timestamps();
         });
     }

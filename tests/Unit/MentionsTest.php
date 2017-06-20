@@ -16,7 +16,7 @@ class MentionsTest extends TestCase
     {
         $mention = $this->testCommentModel->mention($this->testUserModel->first());
 
-        $this->assertTrue($this->testCommentModel->mentions()->contains($mention));
+        $this->assertTrue($this->testCommentModel->mentions(false)->contains($mention));
     }
 
     /** @test */
