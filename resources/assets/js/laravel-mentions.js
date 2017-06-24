@@ -73,15 +73,15 @@ class Mentions {
         this.input.addEventListener('keyup', event => {
             let input = event.target;
             let mentions = instance.output;
-            let objects = [];
+            var nodeList = [];
 
             let nodes = input.getElementsByClassName('mention-node');
 
-            for (let node of nodes) {
-                objects.push(node.getAttribute('data-object'));
+            for (let i = 0; i < nodes.length; i++) {
+                nodeList.push(nodes[i].getAttribute('data-object'));
             }
 
-            mentions.value = objects.join();
+            mentions.value = nodeList.join();
 
             if (input.hasAttribute('for') && ! (instance.options.ignoreFor || false)) {
                 document.querySelector(input.getAttribute('for')).value = input.innerHTML;
