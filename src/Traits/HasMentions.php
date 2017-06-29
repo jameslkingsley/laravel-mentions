@@ -90,7 +90,7 @@ trait HasMentions
      *
      * @return Collection Model
      */
-    public function mentions(bool $resolve = true)
+    public function mentions($resolve = true)
     {
         $mentions = $this->mentionRepository->get();
 
