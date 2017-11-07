@@ -27,6 +27,13 @@ abstract class TestCase extends Orchestra
         $this->testUserModel = TestUserModel::first();
     }
 
+    protected function getPackageProviders()
+    {
+        return [
+            'Kingsley\Mentions\MentionServiceProvider',
+        ];
+    }
+
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('database.default', 'sqlite');
@@ -51,18 +58,18 @@ abstract class TestCase extends Orchestra
 
     protected function setUpDatabase($app)
     {
-        $app['db']->connection()->getSchemaBuilder()->create('test_mention_users', function(Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('test_mention_users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 30);
         });
 
-        $app['db']->connection()->getSchemaBuilder()->create('test_mention_comments', function(Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('test_mention_comments', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('text', 30);
         });
 
-        $app['db']->connection()->getSchemaBuilder()->create('notifications', function(Blueprint $table) {
+        $app['db']->connection()->getSchemaBuilder()->create('notifications', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('type');
             $table->morphs('notifiable');

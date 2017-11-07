@@ -2,8 +2,10 @@
 
 namespace Kingsley\Mentions\Test\Unit;
 
+use Illuminate\Support\Facades\App;
 use Kingsley\Mentions\Test\TestCase;
 use Kingsley\Mentions\Models\Mention;
+use Illuminate\Support\Facades\Request;
 use Kingsley\Mentions\Test\TestCommentModel;
 use Kingsley\Mentions\Collections\MentionCollection;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -30,7 +32,7 @@ class MentionsTest extends TestCase
     /** @test */
     public function can_mention_encoded_string()
     {
-        $encoded = $this->testUserModel->all()->map(function($user) {
+        $encoded = $this->testUserModel->all()->map(function ($user) {
             return "users:{$user->id}";
         })->implode(',');
 
@@ -58,7 +60,7 @@ class MentionsTest extends TestCase
     /** @test */
     public function can_unmention_encoded_string()
     {
-        $encoded = $this->testUserModel->all()->map(function($user) {
+        $encoded = $this->testUserModel->all()->map(function ($user) {
             return "users:{$user->id}";
         })->implode(',');
 
@@ -119,5 +121,16 @@ class MentionsTest extends TestCase
         $encoded = $this->testCommentModel->mentions()->encoded();
 
         $this->assertInternalType('string', $encoded);
+    }
+
+    /** @test */
+    public function can_get_mentions_from_route()
+    {
+        $request = Request::create('/api/mentions/?p=users&q=Ke', 'GET');
+        $response = App::handle($request);
+        $data = json_decode($response->getContent());
+
+        $this->assertInternalType('array', $data);
+        $this->assertTrue(sizeof($data) === 2);
     }
 }

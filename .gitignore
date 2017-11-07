@@ -1,4 +1,4 @@
-.phpintel/
 vendor/
 node_modules/
 composer.lock
+example/

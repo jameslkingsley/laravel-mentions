@@ -38,13 +38,14 @@ class Mentions {
                 }
             };
 
-            xhttp.open('post', '/api/mentions?p=' + pool.pool + '&q=' + text, true);
+            xhttp.open('get', '/api/mentions/?p=' + pool.pool + '&q=' + text, true);
             xhttp.send();
         }
     }
 
     collect() {
-        for (let pool of this.options.pools) {
+        for (let i = 0; i < this.options.pools.length; i++) {
+            let pool = this.options.pools[i];
             this.collections.push({
                 trigger: pool.trigger || '@',
                 lookup: pool.display,
@@ -90,4 +91,4 @@ class Mentions {
     }
 }
 
-module.exports = Mentions
+export default Mentions
