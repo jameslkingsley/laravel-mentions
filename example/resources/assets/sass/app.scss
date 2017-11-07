@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+@import "laravel-mentions";
+
+html, body {
+    font-family: 'Raleway', sans-serif;
+    padding: 2rem 2rem 10rem 2rem;
+}
+
+.hide {
+    display: none;
+}
+
+.mention-node {
+    color: #00d1b2;
+    font-weight: 600;
+}
