@@ -133,4 +133,20 @@ class MentionsTest extends TestCase
         $this->assertInternalType('array', $data);
         $this->assertTrue(sizeof($data) === 2);
     }
+
+    /** @test */
+    public function can_use_filter_in_pool()
+    {
+        $this->app['config']->set(
+            'mentions.pools.users.filter',
+            'Kingsley\Mentions\Test\TestUserFilter'
+        );
+
+        $request = Request::create('/api/mentions/?p=users&q=Ke', 'GET');
+        $response = App::handle($request);
+        $data = json_decode($response->getContent());
+
+        $this->assertInternalType('array', $data);
+        $this->assertTrue(sizeof($data) === 2);
+    }
 }

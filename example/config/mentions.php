@@ -8,6 +8,9 @@ return [
             // Model that will be mentioned
             'model' => 'App\User',
 
+            // Filter class that alters the query
+            'filter' => null,
+
             // The column that will be used to search the model
             'column' => 'name',
 

@@ -37,6 +37,7 @@ abstract class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('database.default', 'sqlite');
+        $app['config']->set('app.debug', true);
 
         $app['config']->set('database.connections.sqlite', [
             'driver' => 'sqlite',
@@ -48,6 +49,7 @@ abstract class TestCase extends Orchestra
             'pools' => [
                 'users' => [
                     'model' => 'Kingsley\Mentions\Test\TestUserModel',
+                    'filter' => null,
                     'column' => 'name',
                     'notification' => 'Kingsley\Mentions\Test\TestNotifiedModel',
                     'auto_notify' => false

@@ -79,6 +79,9 @@ return [
             // Model that will be mentioned
             'model' => 'App\User',
 
+            // Filter class that alters the query
+            'filter' => null,
+
             // The column that will be used to search the model
             'column' => 'name',
 
@@ -215,3 +218,41 @@ If you want to use notifications, here's some stuff you may need to know.
 - When a mention is notified, it will use Laravel's built-in Notification trait to make the notification. That means the model class defined in the pool's config must have the `Notifiable` trait.
 - It will use the notification class defined in the pool's config, so you can handle it differently for each one.
 - The data stored in the notification will always be the model that did the mention, for example `$comment->mention($user)` will store `$comment` in the data field.
+
+### Filters
+
+You might want to apply some custom filters to the model when it retrieves the records. To do this just create a class somewhere in your app, then add it to the mention config:
+
+```php
+return [
+    'pools' => [
+        'users' => [
+            ...
+            'filter' => 'App\Filters\UserFilter',
+            ...
+        ]
+    ]
+];
+```
+
+This is what your filter class should look like. It just has one static method called `handle` that takes the query as an argument, and must return the query.
+
+```php
+<?php
+
+namespace App\Filters;
+
+class UserFilter
+{
+    /**
+     * Handles the filtering and returns the updated query.
+     *
+     * @return Illuminate\Database\Eloquent\Builder
+     */
+    public static function handle($query)
+    {
+        // Apply your filters here!
+        return $query->where('someColumn', 'someValue');
+    }
+}
+```
