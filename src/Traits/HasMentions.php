@@ -21,8 +21,10 @@ trait HasMentions
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
+        parent::__construct($attributes);
+
         $this->mentionRepository = new MentionRepository($this);
     }
 
@@ -33,7 +35,9 @@ trait HasMentions
      */
     public function mention($model, $notify = true)
     {
-        if (is_null($model)) return null;
+        if (is_null($model)) {
+            return null;
+        }
 
         if (is_string($model)) {
             $model = $this->mentionRepository->parse($model);
@@ -63,7 +67,9 @@ trait HasMentions
      */
     public function unmention($model)
     {
-        if (is_null($model)) return;
+        if (is_null($model)) {
+            return;
+        }
 
         if (is_string($model)) {
             $model = $this->mentionRepository->parse($model);
@@ -95,7 +101,7 @@ trait HasMentions
         $mentions = $this->mentionRepository->get();
 
         if ($resolve) {
-            $mentions->transform(function($mention) {
+            $mentions->transform(function ($mention) {
                 return $mention->recipient();
             });
         }

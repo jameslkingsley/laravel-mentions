@@ -59,11 +59,13 @@ class MentionRepository
      */
     public function parse(string $list)
     {
-        if (!$list) return $list;
+        if (!$list) {
+            return $list;
+        }
 
         $list = collect(explode(',', $list));
 
-        return $list->map(function($item) {
+        return $list->map(function ($item) {
             $parts = explode(':', $item);
             $model = app()->make(config('mentions.pools.'.$parts[0].'.model'));
             return $model::findOrFail($parts[1]);
