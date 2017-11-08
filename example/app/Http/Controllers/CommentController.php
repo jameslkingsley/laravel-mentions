@@ -39,9 +39,7 @@ class CommentController extends Controller
             'text' => 'required'
         ]);
 
-        $comment = new Comment;
-        $comment->text = $attributes['text'];
-        $comment->save();
+        $comment = Comment::create($attributes);
 
         $comment->mention($request->mentions);
 
