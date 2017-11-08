@@ -27,7 +27,7 @@ abstract class TestCase extends Orchestra
         $this->testUserModel = TestUserModel::first();
     }
 
-    protected function getPackageProviders()
+    protected function getPackageProviders($app)
     {
         return [
             'Kingsley\Mentions\MentionServiceProvider',
