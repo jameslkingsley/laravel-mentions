@@ -61,6 +61,29 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="columns" style="margin-top: 4rem">
+                <div class="column is-half is-offset-one-quarter">
+                    <h2 class="subtitle has-text-centered">Edit Comment</h2>
+                    <form method="post" action="{{ route('comments.update', $comment) }}">
+                        <input type="hidden" name="mentions" id="mentions_update" value="{{ $comment->mentions()->encoded() }}">
+
+                        <div class="field">
+                            <div class="control">
+                                <textarea class="hide" name="text" id="text_update">{!! $comment->text !!}</textarea>
+                                <div class="textarea has-mentions-update" contenteditable="true" for="#text_update">{!! $comment->text !!}</div>
+                            </div>
+                        </div>
+
+                        <button class="button is-primary is-pulled-right" type="submit">
+                            Update Comment
+                        </button>
+
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
+                    </form>
+                </div>
+            </div>
         </div>
 
         <script src="{{ mix('/js/app.js') }}"></script>

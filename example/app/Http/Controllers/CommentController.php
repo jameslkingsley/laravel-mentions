@@ -75,9 +75,15 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Comment $comment)
     {
-        //
+        $attributes = $request->validate([
+            'text' => 'required'
+        ]);
+
+        $comment->update($attributes);
+
+        return back();
     }
 
     /**

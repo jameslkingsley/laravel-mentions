@@ -18,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         View::share('users', User::all());
         View::share('comments', Comment::all());
+        View::share('comment', Comment::first());
     }
 
     /**
