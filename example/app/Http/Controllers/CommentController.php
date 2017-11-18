@@ -81,7 +81,10 @@ class CommentController extends Controller
             'text' => 'required'
         ]);
 
-        $comment->update($attributes);
+        tap($comment)
+            ->update($attributes)
+            ->clearMentions()
+            ->mention($request->mentions);
 
         return back();
     }
