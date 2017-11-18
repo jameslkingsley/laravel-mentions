@@ -4,6 +4,7 @@ namespace Kingsley\Mentions\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Kingsley\Mentions\Collections\ModelCollection;
 
 class MentionController extends Controller
 {
@@ -25,12 +26,13 @@ class MentionController extends Controller
             $query = $filter::handle($query);
         }
 
-        $query->get([$model->getKeyName(), $pool->column])
-            ->each(function ($record) use ($request, &$resultSet) {
-                $record->pool = $request->p;
-                $resultSet->push($record);
-            });
+        $query->each(function ($record) use ($request, &$resultSet) {
+            $record->pool = $request->p;
+            $resultSet->push($record);
+        });
 
-        return response()->json($resultSet);
+        $resource = $pool->resource ?: ModelCollection::class;
+
+        return new $resource($resultSet);
     }
 }

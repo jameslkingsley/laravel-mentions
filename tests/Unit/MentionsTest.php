@@ -8,8 +8,6 @@ use Kingsley\Mentions\Models\Mention;
 use Illuminate\Support\Facades\Request;
 use Kingsley\Mentions\Test\TestCommentModel;
 use Kingsley\Mentions\Collections\MentionCollection;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class MentionsTest extends TestCase
 {
@@ -132,6 +130,22 @@ class MentionsTest extends TestCase
 
         $this->assertInternalType('array', $data);
         $this->assertTrue(sizeof($data) === 2);
+    }
+
+    /** @test */
+    public function can_get_mentions_from_route_with_custom_resource()
+    {
+        $this->app['config']->set(
+            'mentions.pools.users.resource',
+            'Kingsley\Mentions\Test\TestUserCollection'
+        );
+
+        $request = Request::create('/api/mentions/?p=users&q=Ke', 'GET');
+        $response = App::handle($request);
+        $data = json_decode($response->getContent());
+
+        $this->assertInternalType('object', $data);
+        $this->assertTrue(isset($data->meta) && $data->meta === 'test');
     }
 
     /** @test */

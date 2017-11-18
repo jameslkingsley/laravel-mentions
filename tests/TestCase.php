@@ -6,8 +6,6 @@ use DB;
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orchestra\Testbench\Traits as OrchestraTrait;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class TestCase extends Orchestra
 {
@@ -49,6 +47,7 @@ abstract class TestCase extends Orchestra
             'pools' => [
                 'users' => [
                     'model' => 'Kingsley\Mentions\Test\TestUserModel',
+                    'resource' => null,
                     'filter' => null,
                     'column' => 'name',
                     'notification' => 'Kingsley\Mentions\Test\TestNotifiedModel',
@@ -80,7 +79,7 @@ abstract class TestCase extends Orchestra
             $table->timestamps();
         });
 
-        foreach (['Keith','Kevin','Ian','Rupert'] as $name) {
+        foreach (['Keith', 'Kevin', 'Ian', 'Rupert'] as $name) {
             DB::table('test_mention_users')->insert([
                 'name' => $name
             ]);
@@ -91,7 +90,7 @@ abstract class TestCase extends Orchestra
             'text' => 'test'
         ]);
 
-        include_once __DIR__.'/../database/migrations/create_mentions_table.php.stub';
+        include_once __DIR__ . '/../database/migrations/create_mentions_table.php.stub';
 
         (new \CreateMentionsTable())->up();
     }

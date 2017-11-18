@@ -8,6 +8,9 @@ return [
             // Model that will be mentioned
             'model' => 'App\User',
 
+            // Resource class that provides the JSON
+            'resource' => null,
+
             // Filter class that alters the query
             'filter' => null,
 
