@@ -122,6 +122,18 @@ class MentionsTest extends TestCase
     }
 
     /** @test */
+    public function can_clear_mentions_off_of_model()
+    {
+        $mention = $this->testCommentModel->mention($this->testUserModel->first());
+
+        $this->assertTrue($this->testCommentModel->mentions(false)->contains($mention));
+
+        $this->testCommentModel->clearMentions();
+
+        $this->assertTrue($this->testCommentModel->mentions()->isEmpty());
+    }
+
+    /** @test */
     public function can_get_mentions_from_route()
     {
         $request = Request::create('/api/mentions/?p=users&q=Ke', 'GET');

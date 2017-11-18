@@ -94,7 +94,7 @@ trait HasMentions
     /**
      * Gets all mentions for the given model.
      *
-     * @return Collection Model
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function mentions(bool $resolve = true)
     {
@@ -107,5 +107,17 @@ trait HasMentions
         }
 
         return $mentions;
+    }
+
+    /**
+     * Clears all mentions for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function clearMentions()
+    {
+        $this->mentions(false)->clear();
+
+        return $this;
     }
 }

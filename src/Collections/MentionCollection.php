@@ -17,7 +17,7 @@ class MentionCollection extends Collection
     {
         $encoded = collect();
 
-        $this->each(function($model) use(&$encoded) {
+        $this->each(function ($model) use (&$encoded) {
             $pool = Mention::pool($model);
             $encoded->push("{$pool->key}:{$model->getKey()}");
         });
@@ -32,10 +32,22 @@ class MentionCollection extends Collection
      */
     public function notify($notify_class = '')
     {
-        $this->each(function($mention) use($notify_class) {
+        $this->each(function ($mention) use ($notify_class) {
             $mention->notify($notify_class);
         });
 
         return $this;
+    }
+
+    /**
+     * Removes all mentions from database for this model.
+     *
+     * @return void
+     */
+    public function clear()
+    {
+        $this->each(function ($mention) {
+            $mention->delete();
+        });
     }
 }
