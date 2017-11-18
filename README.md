@@ -211,6 +211,14 @@ It's as simple as this:
 <input type="hidden" name="mentions" id="mentions" value="{{ $comment->mentions()->encoded() }}">
 ```
 
+Then on the back-end you can update the model's mentions by doing the following:
+
+```php
+$comment
+    ->clearMentions()
+    ->mention($request->mentions);
+```
+
 ### Notifications
 
 If you want to use notifications, here's some stuff you may need to know.
