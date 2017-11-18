@@ -256,3 +256,21 @@ class UserFilter
     }
 }
 ```
+
+### Resources
+
+If you'd like to change the JSON response that the `/api/mentions` route returns, you can create your own resource class. To begin with head over to the [Laravel docs](https://laravel.com/docs/5.5/eloquent-resources) to create and setup a resource class.
+
+Once you have your resource class, simply add it to your mention config in one or more of your pools, such as:
+
+```php
+return [
+    'pools' => [
+        'users' => [
+            ...
+            'resource' => 'App\Resources\UserCollection',
+            ...
+        ]
+    ]
+];
+```
