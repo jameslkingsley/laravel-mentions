@@ -226,6 +226,7 @@ If you want to use notifications, here's some stuff you may need to know.
 - When a mention is notified, it will use Laravel's built-in Notification trait to make the notification. That means the model class defined in the pool's config must have the `Notifiable` trait.
 - It will use the notification class defined in the pool's config, so you can handle it differently for each one.
 - The data stored in the notification will always be the model that did the mention, for example `$comment->mention($user)` will store `$comment` in the data field.
+- __construct method of notification class gets the model that did the mention as an argument, for example `$comment->mention($user)` will get `$comment` on the constructor.
 
 ### Filters
 
