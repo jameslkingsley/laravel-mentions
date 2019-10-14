@@ -152,6 +152,18 @@ Next add the script to initialize the mentions:
 
 ```js
 new Mentions({
+    // Additional headers to send
+    // to possibly authenicate
+    // the current user
+    http: {
+        headers: [
+            // {
+            //     name: "Authorization",
+            //     value: "Bearer your-user-api-token"
+            // }
+        ]
+    },
+
     // Input element selector
     // Defaults to .has-mentions
     input: ".has-mentions",
