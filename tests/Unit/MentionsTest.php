@@ -4,6 +4,7 @@ namespace Kingsley\Mentions\Test\Unit;
 
 use Illuminate\Support\Facades\App;
 use Kingsley\Mentions\Test\TestCase;
+use Illuminate\Support\Facades\Route;
 use Kingsley\Mentions\Models\Mention;
 use Illuminate\Support\Facades\Request;
 use Kingsley\Mentions\Test\TestCommentModel;
@@ -174,5 +175,20 @@ class MentionsTest extends TestCase
 
         $this->assertInternalType('array', $data);
         $this->assertTrue(sizeof($data) === 2);
+    }
+
+    /** @test */
+    public function can_assign_global_middleware_to_route()
+    {
+        $this->app['config']->set(
+            'mentions.middleware',
+            'test-middleware'
+        );
+
+        $request = Request::create('/api/mentions/?p=users&q=Ke', 'GET');
+        App::handle($request);
+        $route = Route::current();
+
+        $this->assertContains('test-middleware', $route->gatherMiddleware());
     }
 }
