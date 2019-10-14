@@ -301,8 +301,6 @@ return [
     'middleware' => [
         'your-middleware-here',
     ],
-    'pools' => [
-        //
-    ]
+    //
 ];
 ```
