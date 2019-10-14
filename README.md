@@ -35,7 +35,7 @@ $mention->notify();
 
 ## Requirements
 
-- [Tribute](https://github.com/zurb/tribute)
+-   [Tribute](https://github.com/zurb/tribute)
 
 ## Installation
 
@@ -113,7 +113,7 @@ window.Tribute = Tribute;
 Now in your `bootstrap.js` file you can import the `Mentions` class and also assign it globally.
 
 ```js
-import Mentions from './laravel-mentions';
+import Mentions from "./laravel-mentions";
 window.Mentions = Mentions;
 ```
 
@@ -128,7 +128,7 @@ Now let's setup the form where we'll write a comment that has mentions:
 ```html
 <form method="post" action="{{ route('comments.store') }}">
     <!-- This field is required, it stores the mention data -->
-    <input type="hidden" name="mentions" id="mentions">
+    <input type="hidden" name="mentions" id="mentions" />
 
     <!-- We write the comment in the div -->
     <!-- The for attribute is a helper to auto-populate the textarea -->
@@ -150,27 +150,29 @@ Next add the script to initialize the mentions:
 new Mentions({
     // Input element selector
     // Defaults to .has-mentions
-    input: '.has-mentions',
+    input: ".has-mentions",
 
     // Output form field selector
     // Defaults to #mentions
-    output: '#mentions',
+    output: "#mentions",
 
     // Pools
-    pools: [{
-        // Trigger the popup on the @ symbol
-        // Defaults to @
-        trigger: '@',
+    pools: [
+        {
+            // Trigger the popup on the @ symbol
+            // Defaults to @
+            trigger: "@",
 
-        // Pool name from the mentions config
-        pool: 'users',
+            // Pool name from the mentions config
+            pool: "users",
 
-        // Same value as the pool's 'column' value
-        display: 'name',
+            // Same value as the pool's 'column' value
+            display: "name",
 
-        // The model's primary key field name
-        reference: 'id'
-    }]
+            // The model's primary key field name
+            reference: "id"
+        }
+    ]
 });
 ```
 
@@ -204,11 +206,17 @@ public function store(Request $request)
 That's it! Now when displaying your comments you can style the `.mention-node` class that is inserted via Tribute. That same node also has a `data-object` attribute that contains the pool name and reference value, eg: `users:1`.
 
 ### Editing Content With Mentions
+
 You'll most likely need to edit the text content, so it's necessary to restore the mentions list in the form.
 It's as simple as this:
 
 ```html
-<input type="hidden" name="mentions" id="mentions" value="{{ $comment->mentions()->encoded() }}">
+<input
+    type="hidden"
+    name="mentions"
+    id="mentions"
+    value="{{ $comment->mentions()->encoded() }}"
+/>
 ```
 
 Then on the back-end you can update the model's mentions by doing the following:
@@ -223,10 +231,10 @@ $comment
 
 If you want to use notifications, here's some stuff you may need to know.
 
-- When a mention is notified, it will use Laravel's built-in Notification trait to make the notification. That means the model class defined in the pool's config must have the `Notifiable` trait.
-- It will use the notification class defined in the pool's config, so you can handle it differently for each one.
-- The data stored in the notification will always be the model that did the mention, for example `$comment->mention($user)` will store `$comment` in the data field.
-- __construct method of notification class gets the model that did the mention as an argument, for example `$comment->mention($user)` will get `$comment` on the constructor.
+-   When a mention is notified, it will use Laravel's built-in Notification trait to make the notification. That means the model class defined in the pool's config must have the `Notifiable` trait.
+-   It will use the notification class defined in the pool's config, so you can handle it differently for each one.
+-   The data stored in the notification will always be the model that did the mention, for example `$comment->mention($user)` will store `$comment` in the data field.
+-   \_\_construct method of notification class gets the model that did the mention as an argument, for example `$comment->mention($user)` will get `$comment` on the constructor.
 
 ### Filters
 
@@ -280,6 +288,21 @@ return [
             'resource' => 'App\Resources\UserCollection',
             ...
         ]
+    ]
+];
+```
+
+### Middleware
+
+If you'd like you can optionally add middleware to the `/api/mentions` route. This can be useful in case you want to protect the route behind an authentication guard. Head over to the [Laravel docs](https://laravel.com/docs/5.5/middleware) find out more about middleware.
+
+```php
+return [
+    'middleware' => [
+        'your-middleware-here',
+    ],
+    'pools' => [
+        //
     ]
 ];
 ```
