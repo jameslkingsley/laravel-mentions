@@ -72,6 +72,10 @@ This is the contents of the published config file:
 
 ```php
 return [
+    // The middleware that should be applied to all
+    // routes that are registered in this package.
+    'middleware' => null,
+
     // Pools are what you reference on the front-end
     // They contain the model that will be mentioned
     'pools' => [
