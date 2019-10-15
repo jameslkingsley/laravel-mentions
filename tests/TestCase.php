@@ -4,6 +4,7 @@ namespace Kingsley\Mentions\Test;
 
 use DB;
 use Illuminate\Database\Schema\Blueprint;
+use Kingsley\Mentions\Test\TestMiddleware;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orchestra\Testbench\Traits as OrchestraTrait;
 
@@ -20,6 +21,7 @@ abstract class TestCase extends Orchestra
 
         $this->loadLaravelMigrations(['--database' => 'sqlite']);
         $this->setUpDatabase($this->app);
+        $this->setUpMiddleware($this->app);
 
         $this->testCommentModel = TestCommentModel::first();
         $this->testUserModel = TestUserModel::first();
@@ -44,6 +46,7 @@ abstract class TestCase extends Orchestra
         ]);
 
         $app['config']->set('mentions', [
+            'middleware' => null,
             'pools' => [
                 'users' => [
                     'model' => 'Kingsley\Mentions\Test\TestUserModel',
@@ -93,5 +96,10 @@ abstract class TestCase extends Orchestra
         include_once __DIR__ . '/../database/migrations/create_mentions_table.php.stub';
 
         (new \CreateMentionsTable())->up();
+    }
+
+    protected function setUpMiddleware($app)
+    {
+        $app['router']->aliasMiddleware('test-middleware', TestMiddleware::class);
     }
 }

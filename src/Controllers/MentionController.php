@@ -8,6 +8,11 @@ use Kingsley\Mentions\Collections\ModelCollection;
 
 class MentionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(config('mentions.middleware'));
+    }
+
     /**
      * Display a listing of the resource.
      *
