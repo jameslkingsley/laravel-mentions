@@ -2,6 +2,15 @@
 
 [![Build Status](https://travis-ci.org/jameslkingsley/laravel-mentions.svg?branch=master)](https://travis-ci.org/jameslkingsley/laravel-mentions)
 
+## Abandoned
+Unfortunately, I don't have the time to adequately maintain this package. I recommend [Xetaravel-Mentions](https://github.com/XetaIO/Xetaravel-Mentions) which appears to be better maintained with similar functionality.
+
+In hindsight, this package has tried to do too much to implement this functionality. If you're looking to implement mentions, I think you'd be better off implementing the front-end manually, and abstracting the back-end to that package above or writing your own API.
+
+-----------------------------------
+
+Hope this helps!
+
 This Laravel >=5.4 package provides an easy way to setup mentions for Eloquent models. It provides the front-end for inserting mentions into **content-editable** elements, the back-end for associating mentions with models and lastly an elegant way to notify the mentioned models that they have been mentioned.
 
 Here are a few short examples of what you can do:
