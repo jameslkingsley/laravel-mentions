@@ -1,4 +1,4 @@
-# End-to-end Mentions in Laravel 5
+# End-to-end Mentions in Laravel 5 & 6
 
 [![Build Status](https://travis-ci.org/jameslkingsley/laravel-mentions.svg?branch=master)](https://travis-ci.org/jameslkingsley/laravel-mentions)
 
